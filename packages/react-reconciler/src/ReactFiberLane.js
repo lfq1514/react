@@ -248,6 +248,7 @@ export function lanePriorityToSchedulerPriority(
 
 export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
   // Early bailout if there's no pending work left.
+  //root.pendingLanes是在commit阶段，所有优先级不够的update对应的lane
   const pendingLanes = root.pendingLanes;
   if (pendingLanes === NoLanes) {
     return_highestLanePriority = NoLanePriority;

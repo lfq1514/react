@@ -530,8 +530,11 @@ export function scheduleUpdateOnFiber(
   lane: Lane,
   eventTime: number,
 ) {
+  //查看是否有有限更新（例如：render中去调用setState就是一个无限更新）
   checkForNestedUpdates();
   warnAboutRenderPhaseUpdatesInDEV(fiber);
+
+  //向上收集fiber.childLanes
 
   const root = markUpdateLaneFromFiberToRoot(fiber, lane);
   if (root === null) {
@@ -540,6 +543,7 @@ export function scheduleUpdateOnFiber(
   }
 
   // Mark that the root has a pending update.
+  //在root上标记更新，将update中的lane放到root.pendingLanes
   markRootUpdated(root, lane, eventTime);
 
   if (root === workInProgressRoot) {
@@ -570,6 +574,7 @@ export function scheduleUpdateOnFiber(
 
   // TODO: requestUpdateLanePriority also reads the priority. Pass the
   // priority as an argument to that function and this one.
+  //获取事件优先级，（这里的事件优先级是在创建不同优先级的事件监听的时候，记住到schedule中的r）
   const priorityLevel = getCurrentPriorityLevel();
 
   if (lane === SyncLane) {
@@ -690,11 +695,13 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   markStarvedLanesAsExpired(root, currentTime);
 
   // Determine the next lanes to work on, and their priority.
+  //获取renderLanes
   const nextLanes = getNextLanes(
     root,
     root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes,
   );
   // This returns the priority level computed during the `getNextLanes` call.
+  //获取renderLanes对应的工作优先级
   const newCallbackPriority = returnNextLanesPriority();
 
   if (nextLanes === NoLanes) {

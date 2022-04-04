@@ -213,7 +213,7 @@ function workLoop(hasTimeRemaining, initialTime) {
     return false;
   }
 }
-
+//以某种优先级去执行事件处理函数
 function unstable_runWithPriority(priorityLevel, eventHandler) {
   switch (priorityLevel) {
     case ImmediatePriority:

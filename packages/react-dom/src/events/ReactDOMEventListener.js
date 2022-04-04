@@ -90,7 +90,7 @@ export function createEventListenerWrapper(
     targetContainer,
   );
 }
-
+//它会首先根据事件的名称去找对应的事件优先级，然后依据优先级返回不同的事件监听函数。
 export function createEventListenerWrapperWithPriority(
   targetContainer: EventTarget,
   domEventName: DOMEventName,
@@ -117,7 +117,7 @@ export function createEventListenerWrapperWithPriority(
     targetContainer,
   );
 }
-
+//以UserBlockingEvent的事件级别去执行事件处理函数。
 function dispatchDiscreteEvent(
   domEventName,
   eventSystemFlags,
@@ -140,7 +140,7 @@ function dispatchDiscreteEvent(
     nativeEvent,
   );
 }
-
+//以UserBlockingEvent的事件级别去执行事件处理函数
 function dispatchUserBlockingUpdate(
   domEventName,
   eventSystemFlags,

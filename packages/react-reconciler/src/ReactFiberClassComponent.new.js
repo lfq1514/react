@@ -193,6 +193,7 @@ export function applyDerivedStateFromProps(
 
 const classComponentUpdater = {
   isMounted,
+  //生成update
   enqueueSetState(inst, payload, callback) {
     const fiber = getInstance(inst);
     const eventTime = requestEventTime();
